@@ -2,14 +2,11 @@
 
 This project is about designing and simulating a sensor signal-conditioning circuit and using it with an ADC interface. I used LTspice for the analog circuit, Python for ADC sampling analysis, and STM32CubeIDE for the firmware.
 
-## What I wanted to do
+## ## Problem Statement
 
-- Design an RC low-pass filter to reduce higher-frequency components.
-- Use op-amp stages for signal conditioning.
-- Generate a 1.65 V reference voltage.
-- Shift and scale the signal for a 0–3.3 V ADC input.
-- Understand how sampling rate and ADC resolution affect the signal.
-- Write STM32 firmware to read ADC values and send them over UART.
+Sensor signals are not always suitable for direct digital measurement. They may contain unwanted noise, have small amplitudes, or fall outside the input range of a microcontroller's ADC.
+
+This project explores how a sensor signal can be conditioned, simulated, and prepared for digital acquisition. It also looks at how ADC sampling and resolution affect the resulting digital signal, with an STM32 microcontroller as the target platform.
 
 ## Circuit Overview
 
