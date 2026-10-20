@@ -32,9 +32,9 @@ The simulated output stays within the nominal 0–3.3 V range for the input sign
 
 The cutoff frequency was calculated using:
 
-\[
-f_c=\frac{1}{2\pi RC}
-\]
+### Cutoff Frequency Calculation
+
+![RC Low-Pass Filter Cutoff Frequency](screenshots/rc-cutoff-formula.png)
 
 For R = 10 kΩ and C = 100 nF, the cutoff frequency is approximately 159.15 Hz.
 
