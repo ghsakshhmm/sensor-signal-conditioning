@@ -1,59 +1,83 @@
 # Sensor Signal Conditioning and ADC Interface
 
-A simulation-based analog front-end design developed using **LTspice 26.1.1**. The project demonstrates low-pass filtering, op-amp signal conditioning, reference voltage generation, and interfacing an analog signal with a 0–3.3 V ADC input range.
+This project is about designing and simulating an analog front end using **LTspice 26.1.1**. It takes a small input signal, filters and conditions it, and adjusts it to fit within a 0–3.3 V ADC input range.
 
-## Objectives
+## What I wanted to do
 
-- Design an RC low-pass filter to attenuate higher-frequency components.
-- Simulate op-amp-based signal conditioning.
-- Generate a stable mid-supply reference of approximately 1.65 V.
-- Shift and scale the conditioned signal to fit within a 0–3.3 V ADC input range.
-- Verify circuit behaviour through transient and DC operating-point simulations.
+- Design an RC low-pass filter to reduce higher-frequency components.
+- Use op-amp stages for signal conditioning.
+- Generate a 1.65 V reference voltage.
+- Shift and scale the signal for a 0–3.3 V ADC input.
+- Check the circuit using different LTspice simulations.
 
 ## Circuit Overview
 
-1. **RC low-pass filter:** R = 10 kΩ, C = 100 nF.
-2. **Amplifier stage:** Op-amp-based signal conditioning.
-3. **Reference generation:** A resistor divider and buffer provide approximately 1.65 V.
-4. **ADC interface:** An op-amp stage shifts and scales the signal around the reference voltage.
+1. **RC Low-Pass Filter:** Uses a 10 kΩ resistor and 100 nF capacitor to filter the input signal.
+2. **Amplifier Stage:** Amplifies the filtered signal.
+3. **Reference Voltage:** Uses a resistor divider and buffer to generate approximately 1.65 V.
+4. **ADC Interface:** Shifts and scales the signal so that the output stays within the intended ADC input range.
 
 ## Simulation Results
 
 | Parameter | Result |
 |---|---:|
-| RC cutoff frequency | 159.15 Hz |
+| RC filter cutoff frequency | 159.15 Hz |
 | Reference voltage | 1.64998 V |
-| ADC output DC operating point | 1.64985 V |
-| ADC output minimum | 0.14113 V |
-| ADC output maximum | 3.15856 V |
-| ADC output peak-to-peak swing | 3.01743 V |
+| ADC output DC voltage | 1.64985 V |
+| Minimum ADC output | 0.14113 V |
+| Maximum ADC output | 3.15856 V |
+| Peak-to-peak output swing | 3.01743 V |
 
-The simulated ADC output remains within the nominal 0–3.3 V range for the tested input signal.
+The simulated output stays within the nominal 0–3.3 V range for the input signal tested.
+
+The cutoff frequency was calculated using:
+
+\[
+f_c=\frac{1}{2\pi RC}
+\]
+
+For R = 10 kΩ and C = 100 nF, the cutoff frequency is approximately 159.15 Hz.
+
+## Simulations Performed
+
+- Transient response
+- DC operating-point analysis
+- AC frequency-response analysis
+- Noise analysis
+- Minimum and maximum output voltage measurements using SPICE directives
 
 ## Tools Used
 
 - LTspice 26.1.1
 - Analog circuit simulation
-- Transient analysis
-- DC operating-point analysis
 - SPICE measurement directives
 
-## Repository Structure
+## Files
 
-- `simulation/` – LTspice schematic and supporting simulation files
-- `screenshots/` – Circuit diagrams and simulation results
-- `reports/` – Design notes and calculations
+- `Sensor_Frontend_ADC_Interface.asc` - Main LTspice schematic
+- `Sensor_Frontend_ADC_Interface.log` - Simulation log and measurement results
+- `Sensor_Frontend_ADC_Interface.plt` - Saved waveform plot settings
+- `screenshots/` - Circuit diagrams and simulation results
+- `LICENSE` - MIT License
 
-## Verification
+## How to Run
 
-The circuit was verified using LTspice simulation. The reported measurements are simulation results, not physical hardware measurements.
+1. Open `Sensor_Frontend_ADC_Interface.asc` in LTspice.
+2. Run the simulation.
+3. Check the waveforms and output voltages.
+4. Open the simulation log to see the measured values.
 
-## Future Improvements
+## Limitations and Future Scope
 
-- Perform frequency-response and noise analysis across the complete frontend.
-- Evaluate component tolerances and op-amp limitations.
-- Explore ADC input protection and input loading effects.
+This project has been designed and tested in simulation only. No physical hardware testing has been performed.
+
+Some improvements that could be explored next:
+- Study the effect of component tolerances.
+- Check op-amp limitations and ADC input loading.
+- Explore input protection for the ADC.
+- Test the circuit with different sensor signals.
+- Compare simulation results with a physical circuit in the future.
 
 ## License
 
-This project is licensed under the MIT License. See `LICENSE` for details.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
