@@ -1,12 +1,12 @@
 # Sensor Signal Conditioning and ADC Interface
 
-This project is about designing and simulating a sensor signal-conditioning circuit and using it with an ADC interface. I used LTspice for the analog circuit, Python for ADC sampling analysis, and STM32CubeIDE for the firmware.
+This project is about designing and simulating a sensor signal-conditioning circuit and preparing the signal for ADC-based measurement. I used LTspice for the analog circuit and STM32CubeIDE for the microcontroller firmware.
 
 ## Problem Statement
 
 Sensor signals are not always suitable for direct digital measurement. They may contain unwanted noise, have small amplitudes, or fall outside the input range of a microcontroller's ADC.
 
-This project explores how a sensor signal can be conditioned, simulated, and prepared for digital acquisition. It also looks at how ADC sampling and resolution affect the resulting digital signal, with an STM32 microcontroller as the target platform.
+This project explores how a sensor signal can be conditioned, simulated, and prepared for digital acquisition, with an STM32 microcontroller as the target platform.
 
 ## Circuit Overview
 
@@ -15,7 +15,7 @@ The circuit has four main stages:
 1. RC low-pass filter using a 10 kΩ resistor and 100 nF capacitor.
 2. Amplifier stage to condition the filtered signal.
 3. Reference voltage stage using a resistor divider and buffer to generate approximately 1.65 V.
-4. ADC interface to keep the output within the intended 0–3.3 V range.
+4. ADC interface designed to keep the output within the intended 0–3.3 V range.
 
 ## Circuit and Simulation
 
@@ -45,15 +45,12 @@ The circuit has four main stages:
 For the input signal tested, the simulated output stays within the nominal 0–3.3 V range.
 
 The cutoff frequency is calculated using:
-fc = 1 / (2πRC)
+
+\[
+f_c=\frac{1}{2\pi RC}
+\]
 
 For R = 10 kΩ and C = 100 nF, the cutoff frequency is approximately 159.15 Hz.
-
-## Python ADC Analysis
-
-I also worked on Python scripts to explore ADC sampling and quantization. The aim is to understand how different sampling rates affect the digital representation of a signal.
-
-The related files are in the `adc_simulation/` folder.
 
 ## STM32 Firmware
 
@@ -66,14 +63,13 @@ I created firmware for the STM32F411CEU6 using STM32CubeMX and STM32CubeIDE.
 
 The firmware builds successfully in STM32CubeIDE, and the compiled HEX file is included in `stm32_firmware/build/`.
 
-I have not tested the firmware on a physical STM32 board yet, so the actual ADC readings and UART output are not verified on hardware.
+The firmware has not been tested on a physical STM32 board. Actual ADC readings and UART output have therefore not been verified on hardware.
 
 More details are in [`stm32_firmware/README.md`](stm32_firmware/README.md).
 
 ## Tools Used
 
 - LTspice 26.1.1
-- Python
 - STM32CubeMX
 - STM32CubeIDE
 - STM32F411CEU6
@@ -87,13 +83,13 @@ More details are in [`stm32_firmware/README.md`](stm32_firmware/README.md).
 3. Check the waveforms and output voltages.
 4. Open the simulation log to see the measured values.
 
-### Python
-
-Open the `adc_simulation/` folder and follow the instructions there to run the analysis scripts.
-
 ### STM32 Firmware
 
-Open the firmware project in STM32CubeIDE and build it. To check actual ADC readings and UART output, the firmware still needs to be tested on a physical board.
+1. Open the firmware project in STM32CubeIDE.
+2. Build the project.
+3. The generated HEX file can be found in `stm32_firmware/build/`.
+
+Testing the actual ADC readings and UART output requires a physical STM32 board or a compatible simulator.
 
 ## Limitations and Future Work
 
