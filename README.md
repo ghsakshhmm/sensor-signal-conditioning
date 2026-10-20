@@ -1,6 +1,6 @@
 # Sensor Signal Conditioning and ADC Interface
 
-This project is about designing and simulating an analog front end using **LTspice 26.1.1**. It takes a small input signal, filters and conditions it, and adjusts it to fit within a 0–3.3 V ADC input range.
+This project is about designing and simulating a sensor signal-conditioning circuit and using it with an ADC interface. I used LTspice for the analog circuit, Python for ADC sampling analysis, and STM32CubeIDE for the firmware.
 
 ## What I wanted to do
 
@@ -8,16 +8,17 @@ This project is about designing and simulating an analog front end using **LTspi
 - Use op-amp stages for signal conditioning.
 - Generate a 1.65 V reference voltage.
 - Shift and scale the signal for a 0–3.3 V ADC input.
-- Check the circuit using different LTspice simulations.
+- Understand how sampling rate and ADC resolution affect the signal.
+- Write STM32 firmware to read ADC values and send them over UART.
 
 ## Circuit Overview
 
 The circuit has four main stages:
 
-1. RC Low-Pass Filter: Uses a 10 kΩ resistor and 100 nF capacitor to filter the input signal.
-2. Amplifier Stage: Amplifies the filtered signal.
-3. Reference Voltage: Uses a resistor divider and buffer to generate approximately 1.65 V.
-4. ADC Interface: Shifts and scales the signal to fit within the intended 0–3.3 V ADC input range.
+1. RC low-pass filter using a 10 kΩ resistor and 100 nF capacitor.
+2. Amplifier stage to condition the filtered signal.
+3. Reference voltage stage using a resistor divider and buffer to generate approximately 1.65 V.
+4. ADC interface to keep the output within the intended 0–3.3 V range.
 
 ## Circuit and Simulation
 
@@ -30,6 +31,9 @@ The circuit has four main stages:
 ### ADC Output Range
 ![ADC Output Range](screenshots/09_ADC_Output_Range.png)
 
+### Cutoff Frequency Calculation
+![RC Low-Pass Filter Cutoff Frequency](screenshots/rc-cutoff-formula.png)
+
 ## Simulation Results
 
 | Parameter | Result |
@@ -41,56 +45,67 @@ The circuit has four main stages:
 | Maximum ADC output | 3.15856 V |
 | Peak-to-peak output swing | 3.01743 V |
 
-The simulated output stays within the nominal 0–3.3 V range for the input signal tested.
+For the input signal tested, the simulated output stays within the nominal 0–3.3 V range.
 
-The cutoff frequency was calculated using:
-
-### Cutoff Frequency Calculation
-
+The cutoff frequency is calculated using:
 ![RC Low-Pass Filter Cutoff Frequency](screenshots/rc-cutoff-formula.png)
+fc = 1 / (2πRC)
 
 For R = 10 kΩ and C = 100 nF, the cutoff frequency is approximately 159.15 Hz.
 
-## Simulations Performed
+## Python ADC Analysis
 
-- Transient response
-- DC operating-point analysis
-- AC frequency-response analysis
-- Noise analysis
-- Minimum and maximum output voltage measurements using SPICE directives
+I also worked on Python scripts to explore ADC sampling and quantization. The aim is to understand how different sampling rates affect the digital representation of a signal.
+
+The related files are in the `adc_simulation/` folder.
+
+## STM32 Firmware
+
+I created firmware for the STM32F411CEU6 using STM32CubeMX and STM32CubeIDE.
+
+- 12-bit ADC using ADC1 channel 0 (PA0).
+- ADC readings converted into voltage values.
+- USART2 configured for serial output at 115200 baud.
+- System clock configured for 100 MHz.
+
+The firmware builds successfully in STM32CubeIDE, and the compiled HEX file is included in `stm32_firmware/build/`.
+
+I have not tested the firmware on a physical STM32 board yet, so the actual ADC readings and UART output are not verified on hardware.
+
+More details are in [`stm32_firmware/README.md`](stm32_firmware/README.md).
 
 ## Tools Used
 
 - LTspice 26.1.1
-- Analog circuit simulation
-- SPICE measurement directives
-
-## Files
-
-- `Sensor_Frontend_ADC_Interface.asc` - Main LTspice schematic
-- `Sensor_Frontend_ADC_Interface.log` - Simulation log and measurement results
-- `Sensor_Frontend_ADC_Interface.plt` - Saved waveform plot settings
-- `screenshots/` - Circuit diagrams and simulation results
-- `LICENSE` - MIT License
+- Python
+- STM32CubeMX
+- STM32CubeIDE
+- STM32F411CEU6
 
 ## How to Run
+
+### LTspice
 
 1. Open `Sensor_Frontend_ADC_Interface.asc` in LTspice.
 2. Run the simulation.
 3. Check the waveforms and output voltages.
 4. Open the simulation log to see the measured values.
 
-## Limitations and Future Scope
+### Python
 
-This project has been designed and tested in simulation only. No physical hardware testing has been performed.
+Open the `adc_simulation/` folder and follow the instructions there to run the analysis scripts.
 
-Some improvements that could be explored next:
-- Study the effect of component tolerances.
-- Check op-amp limitations and ADC input loading.
-- Explore input protection for the ADC.
-- Test the circuit with different sensor signals.
-- Compare simulation results with a physical circuit in the future.
+### STM32 Firmware
+
+Open the firmware project in STM32CubeIDE and build it. To check actual ADC readings and UART output, the firmware still needs to be tested on a physical board.
+
+## Limitations and Future Work
+
+- Test the circuit with physical components.
+- Verify ADC readings and UART output on the STM32 board.
+- Compare physical measurements with LTspice results.
+- Explore component tolerances and ADC input protection.
 
 ## License
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+The main project uses the MIT License. Third-party STM32 HAL and CMSIS components have their own license terms.
