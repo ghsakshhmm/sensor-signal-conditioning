@@ -12,10 +12,23 @@ This project is about designing and simulating an analog front end using **LTspi
 
 ## Circuit Overview
 
-1. **RC Low-Pass Filter:** Uses a 10 kΩ resistor and 100 nF capacitor to filter the input signal.
-2. **Amplifier Stage:** Amplifies the filtered signal.
-3. **Reference Voltage:** Uses a resistor divider and buffer to generate approximately 1.65 V.
-4. **ADC Interface:** Shifts and scales the signal so that the output stays within the intended ADC input range.
+The circuit has four main stages:
+
+1. RC Low-Pass Filter: Uses a 10 kΩ resistor and 100 nF capacitor to filter the input signal.
+2. Amplifier Stage: Amplifies the filtered signal.
+3. Reference Voltage: Uses a resistor divider and buffer to generate approximately 1.65 V.
+4. ADC Interface: Shifts and scales the signal to fit within the intended 0–3.3 V ADC input range.
+
+## Circuit and Simulation
+
+### Filter Frequency Response
+![Filter frequency response](screenshots/04_RC_Filter_Cutoff_Response.png)
+
+### Transient Response
+![Transient response](screenshots/06_Amplifier_Transient_Response.png)
+
+### ADC Output Range
+![ADC Output Range](screenshots/09_ADC_Output_Range.png)
 
 ## Simulation Results
 
