@@ -2,7 +2,7 @@
 
 This project is about designing and simulating a sensor signal-conditioning circuit and using it with an ADC interface. I used LTspice for the analog circuit, Python for ADC sampling analysis, and STM32CubeIDE for the firmware.
 
-## ## Problem Statement
+## Problem Statement
 
 Sensor signals are not always suitable for direct digital measurement. They may contain unwanted noise, have small amplitudes, or fall outside the input range of a microcontroller's ADC.
 
